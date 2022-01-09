@@ -1,5 +1,5 @@
 export function h1(text) {
-    return `# ${text}\n`;
+    return `# ${text}`;
 }
 
 export function h2(text) {
@@ -45,6 +45,59 @@ export function strikethrough(text) {
 export function bullet(text) {
     return `* ${text}\n`;
 }
+
+export function versionPill(text) {
+    return `<span class="swgVersion">${text}</span>`;
+}
+
+export function verbPill(text) {
+
+    var color = "var(--no-rainbow)";
+    switch (text) {
+        case 'HEAD':
+            color = "var(--rainbow8)";
+            break;
+        case 'GET':
+            color = "var(--rainbow1)";
+            break;
+        case 'PUT':
+            color = "var(--rainbow2)";
+            break;
+        case 'POST':
+            color = "var(--rainbow3)";
+            break;
+        case 'DELETE':
+            color = "var(--rainbow4)";
+            break;
+        case 'LIST':
+            color = "var(--rainbow5)";
+            break;
+        case 'PATCH':
+            color = "var(--rainbow6)";
+            break;
+        case 'OPTION':
+            color = "var(--rainbow7)";
+            break;
+
+    }
+    return `<span class="swgVerb" style="background-color: ${color};">${text}</span>`;
+}
+
+
+export function BugBug(text) {
+    return `<span class="warn">${text}</span>\n`;
+}
+
+
+export function par1(text) {
+    return `<p class="swgParagraphH1">${text}</p>\n`;
+
+}
+
+export function par2(text) {
+    return `<p class="swgParagraphH2">${text}</p>\n`;
+}
+
 
 export function table(headData, tableData) {
     if (!headData || !tableData || headData.length == 0) {

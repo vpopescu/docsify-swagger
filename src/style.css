@@ -1,0 +1,53 @@
+:root {
+    --no-rainbow: #5e5e5e;
+    --rainbow5: #7B5B69;
+    --rainbow4: #DFB200;
+    --rainbow8: #C94A14;
+    --rainbow1: #BE1515;
+    --rainbow9: #558080;
+    --rainbow2: #36608B;
+    --rainbow6: #767C5E;
+    --rainbow7: #2513C8;
+    --rainbow3: #6251F5;
+}
+
+.swgVersion {
+    background-color: var(--mono-tint3);
+    color: var(--heading-color);
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: inline-block;
+    font-size: var(--font-size-s);
+    vertical-align: top;
+    margin-top: 10px;
+}
+
+.swgVerb {
+    background-color: red;
+    color: var(--heading-color);
+    padding-left: 8px;
+    padding-right: 8px;
+    /*border-radius: 5px;*/
+    margin-right: 10px;
+}
+
+.swgParagraphH1 {
+    color: var(--heading-color);
+}
+
+.swgParagraphH2 {
+    color: var(--heading-color);
+}
+
+.swgBug {
+    background-color: var(--mono-tint3);
+    color: var(--heading-color);
+    border-radius: 6px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: inline-block;
+    font-size: var(--font-size-s);
+    vertical-align: top;
+    margin-top: 10px;
+}

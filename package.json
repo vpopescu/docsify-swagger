@@ -1,37 +1,52 @@
 {
-  "name": "docsify-swagger",
-  "version": "1.0.1",
-  "description": "A plugin to load swagger document for docsify.",
-  "main": "dist/docsify-swagger.min.js",
-  "unpkg": "dist/docsify-swagger.min.js",
-  "scripts": {
-    "build": "webpack --config webpack.config.js",
-    "dev": "webpack-dev-server --config webpack.dev.config.js",
-    "publish": "yarn build && yarn publish --no-git-tag-version --no-push"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/coolerfall/docsify-swagger.git"
-  },
-  "files": [
-    "src",
-    "dist"
-  ],
-  "keywords": [
-    "docsify",
-    "plugin",
-    "swagger"
-  ],
-  "author": "Vincnet Cheung",
-  "license": "MIT",
-  "devDependencies": {
-    "html-webpack-plugin": "4.2.0",
-    "terser-webpack-plugin": "2.3.5",
-    "webpack": "4.42.1",
-    "webpack-cli": "3.3.6",
-    "webpack-dev-server": "3.10.3"
-  },
-  "dependencies": {
-    "extend": "3.0.2"
-  }
+    "name": "docsify-swagger",
+    "version": "1.0.1",
+    "description": "A plugin to load swagger document for docsify.",
+    "main": "dist/docsify-swagger.min.js",
+    "unpkg": "dist/docsify-swagger.min.js",
+    "scripts": {
+        "build": "webpack --config webpack.config.js",
+        "dev": "webpack-dev-server --config webpack.dev.config.js",
+        "publish": "yarn build && yarn publish --no-git-tag-version --no-push"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/coolerfall/docsify-swagger.git"
+    },
+    "files": [
+        "src",
+        "dist"
+    ],
+    "keywords": [
+        "docsify",
+        "plugin",
+        "swagger"
+    ],
+    "author": "Vincnet Cheung",
+    "license": "MIT",
+    "devDependencies": {
+        "assert": "^2.0.0",
+        "buffer": "^6.0.3",
+        "constants-browserify": "^1.0.0",
+        "crypto-browserify": "^3.12.0",
+        "css-loader": "^6.5.1",
+        "css-minimizer-webpack-plugin": "^3.3.1",
+        "html-webpack-plugin": "4.2.0",
+        "mini-css-extract-plugin": "^2.4.6",
+        "path": "^0.12.7",
+        "querystring-es3": "^0.2.1",
+        "sass": "^1.46.0",
+        "sass-loader": "^12.4.0",
+        "style-loader": "^3.3.1",
+        "terser-webpack-plugin": "^5.3.0",
+        "url": "^0.11.0",
+        "util": "^0.12.4",
+        "vm-browserify": "^1.1.2",
+        "webpack": "^5.65.0",
+        "webpack-cli": "^4.9.1",
+        "webpack-dev-server": "^4.7.2"
+    },
+    "dependencies": {
+        "extend": "3.0.2"
+    }
 }

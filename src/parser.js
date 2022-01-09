@@ -1,5 +1,4 @@
 let defReg = new RegExp("#\\/definitions\\/(\\S*)");
-
 export function parse(docJson) {
     let swaggerJson = JSON.parse(docJson)
 
@@ -116,7 +115,7 @@ function parseSchemaParam(param, definitions, expand = false) {
         let refType = "";
         let items = schema.items;
         if (items.type) {
-            refType = capitalize(resolve(items.type, items.format));
+            refType = capitalize(resolveType(items.type, items.format));
         } else {
             refType = refParamName(schema.items.$ref);
         }
@@ -146,6 +145,9 @@ function parseSchemaParam(param, definitions, expand = false) {
 }
 
 function parseRefParam(refType, definitions, refChain = []) {
+    if (!definitions)
+        return [];
+
     let param = definitions[refType];
     if (!param) {
         return [];
@@ -225,6 +227,8 @@ function resolveType(type, format) {
 }
 
 function refParamName(ref) {
+    if (!ref) return "";
+
     let group = ref.match(defReg);
     if (!group || !group[1]) {
         return "";
