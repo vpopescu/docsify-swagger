@@ -1,3 +1,5 @@
+//import { debug } from "util";
+
 let defReg = new RegExp("#\\/definitions\\/(\\S*)");
 export function parse(docJson) {
     let swaggerJson = JSON.parse(docJson)
@@ -13,10 +15,11 @@ export function parse(docJson) {
 
     for (let pk in paths) {
         let apis = paths[pk];
+
         for (let rk in apis) {
             let api = apis[rk];
             let requestParams = api.parameters;
-            let responseParams = api.responses[200];
+            let responseParams = api.responses;
             if (responseParams) {
                 responseParams.description = undefined;
             }
@@ -29,12 +32,29 @@ export function parse(docJson) {
                 description: api.description,
                 deprecated: api.deprecated,
                 request: parseParams(requestParams, definitions),
-                response: parseSchemaParam(responseParams, definitions, true)
+                response: parseResponses(responseParams, definitions, true)
             });
         }
     }
-
     return fixedSwaggerJson;
+}
+
+function parseResponses(responses, definitions, expand = false) {
+    let responseList = [];
+    if (!responses) {
+        return responseList;
+    }
+
+    for (let r in responses) {
+
+        if (r === 'description') continue;
+        let response = {
+            code: r,
+            description: responses[r] ? responses[r].description : undefined
+        };
+        responseList = responseList.concat(response);
+    }
+    return responseList;
 }
 
 function parseParams(params, definitions) {

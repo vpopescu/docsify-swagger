@@ -46,11 +46,11 @@ export function bullet(text) {
     return `* ${text}\n`;
 }
 
-export function versionPill(text) {
+export function swaggerVersionPill(text) {
     return `<span class="swgVersion">${text}</span>`;
 }
 
-export function verbPill(text) {
+export function swaggerVerbPill(text) {
 
     var color = "var(--no-rainbow)";
     switch (text) {
@@ -73,7 +73,7 @@ export function verbPill(text) {
             color = "var(--rainbow5)";
             break;
         case 'PATCH':
-            color = "var(--rainbow6)";
+            color = "var(--rainbow9)";
             break;
         case 'OPTION':
             color = "var(--rainbow7)";
@@ -84,18 +84,23 @@ export function verbPill(text) {
 }
 
 
-export function BugBug(text) {
+export function swaggerBugBug(text) {
     return `<span class="warn">${text}</span>\n`;
 }
 
 
-export function par1(text) {
+export function swaggerPar1(text) {
     return `<p class="swgParagraphH1">${text}</p>\n`;
 
 }
 
-export function par2(text) {
+export function swaggerPar2(text) {
     return `<p class="swgParagraphH2">${text}</p>\n`;
+}
+
+
+export function swaggerUrl(text) {
+    return `<span class="swgUrl">${text}</span>\n`;
 }
 
 
@@ -123,6 +128,22 @@ export function table(headData, tableData) {
     });
 
     return tableContent + "\n";
+}
+
+export function swaggerResponseCode(text) {
+    let parsed = parseInt(text, 10);
+    let cls = "swgResponseUnk"
+    if (!isNaN(parsed)) {
+        if (parsed >= 200 && parsed < 300)
+            cls = "swgResponseInfo"
+        else if (parsed >= 300 && parsed < 400)
+            cls = "swgResponseWarn";
+        else if (parsed >= 400)
+            cls = "swgResponseErr";
+
+    }
+    console.log(`<span class="${cls}">${text}</span>`);
+    return (`<span class="${cls}">${text}</span>`);
 }
 
 export function codeBlock(lang, code) {

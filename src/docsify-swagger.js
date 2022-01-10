@@ -10,11 +10,13 @@ import {
     monospace,
     paragraphTip,
     strikethrough,
-    versionPill,
-    verbPill,
-    par1,
-    par2,
-    BugBug
+    swaggerVersionPill,
+    swaggerVerbPill,
+    swaggerPar1,
+    swaggerPar2,
+    swaggerBugBug,
+    swaggerUrl,
+    swaggerResponseCode
 } from "./markdown";
 import { parse } from "./parser";
 import extend from "extend";
@@ -29,11 +31,12 @@ let options = {
     i18n: {
         "en": {
             request: "Request parameters",
-            response: "Response parameters",
+            response: "Response",
             name: "Name",
             type: "Type",
             required: "Required",
             description: "Description",
+            code: "HTTP response code",
             none: "None"
         },
         "zh-cn": {
@@ -43,6 +46,7 @@ let options = {
             type: "类型",
             required: "是否必传",
             description: "描述",
+            code: "(translate)HTTP response code",
             none: "无"
         },
         fallback: "en"
@@ -123,6 +127,11 @@ export function install(hook, vm) {
         return paragraphTip(`Failed to load swagger from ${url}, load cached document.\n${content[url]}`);
     }
 
+    function markdownEscape(str) {
+        return str ? str.replaceAll("\r", "").replaceAll("\n", "<br\>") : "";
+    }
+
+
     /**
      * Load swagger json from remote url and parse to markdown.
      * 
@@ -141,12 +150,12 @@ export function install(hook, vm) {
         }
 
         if (info.version) {
-            swaggerMarkdown += versionPill(`${info.version}`);
+            swaggerMarkdown += swaggerVersionPill(`${info.version}`);
             swaggerMarkdown += '\n'
         }
 
         if (info.description) {
-            swaggerMarkdown += par1(`${info.description}`);
+            swaggerMarkdown += swaggerPar1(`${info.description}`);
             swaggerMarkdown += '\n'
         }
 
@@ -166,8 +175,8 @@ export function install(hook, vm) {
             if (tag["x-displayName"])
                 tagName = tag["x-displayName"];
             let desc = (tag.description) ?
-                par2(tag.description) :
-                BugBug("FIXME: missing group description.")
+                swaggerPar2(tag.description) :
+                swaggerBugBug("FIXME: missing group description.")
             markdownMap.set(tag.name, `${h2(tagName)}\n\n${desc}\n\n`);
         });
 
@@ -179,22 +188,19 @@ export function install(hook, vm) {
             let deprecated = api.deprecated;
             let markdown = markdownMap.get(tag);
 
-
             let summary = api.summary;
-
             if (deprecated) {
                 summary = strikethrough(summary);
             }
 
             let line = "\n" + h3(summary) + "\n" +
-                verbPill(api.method) + api.path + '\n\n';
+                swaggerVerbPill(api.method) + swaggerUrl(api.path) + '\n\n';
 
             if (line)
                 markdown += line;
 
             /* add request parameters */
             let request = api.request;
-
 
             markdown += h4(i18n.request);
             if (request.length == 0) {
@@ -208,7 +214,7 @@ export function install(hook, vm) {
                         param.name,
                         param.type,
                         param.required,
-                        param.description
+                        markdownEscape(param.description)
                     ]);
 
                     let refParam = param.refParam;
@@ -225,8 +231,7 @@ export function install(hook, vm) {
 
 
 
-            /* add response parameters */
-
+            /* add response */
             let response = api.response;
             markdown += h4(i18n.response);
             if (response.length == 0) {
@@ -237,10 +242,8 @@ export function install(hook, vm) {
                 for (let index = 0; index < response.length; index++) {
                     let param = response[index];
                     tableData.push([
-                        param.name,
-                        param.type,
-                        param.required,
-                        param.description
+                        swaggerResponseCode(param.code),
+                        markdownEscape(param.description)
                     ]);
 
                     let refParam = param.refParam;
@@ -251,7 +254,7 @@ export function install(hook, vm) {
                         });
                     }
                 }
-                markdown += table([i18n.name, i18n.type, i18n.required, i18n.description], tableData) +
+                markdown += table([i18n.code, i18n.description], tableData) +
                     handleNestedParams(nestedParams);
             }
 
